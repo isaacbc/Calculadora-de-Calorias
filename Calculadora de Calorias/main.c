@@ -46,11 +46,23 @@ int main()
     // printf("Utilizando caracteres e acentuação da língua portuguesa!\n\n");
     ///////////////////////////////////////
 
-    struct pNodoABP *abp = NULL;
-    struct pNodoAVL *avl = NULL;
+    pNodoABP *abp = NULL;
+    pNodoAVL *avl = NULL;
     int i, ok;
 
-    avl = InsereAVL(avl, 42, &ok);
+    char info[30];
+    scanf("%s", info);
+    abp = InsereABP(abp, info);
+
+    scanf("%s", info);
+    abp = InsereABP(abp, info);
+
+    scanf("%s", info);
+    abp = InsereABP(abp, info);
+
+    Desenha(abp, 1);
+
+    /* avl = InsereAVL(avl, 42, &ok);
     avl = InsereAVL(avl, 15, &ok);
     avl = InsereAVL(avl, 88, &ok);
     avl = InsereAVL(avl, 6, &ok);
@@ -58,22 +70,13 @@ int main()
     avl = InsereAVL(avl, 4, &ok);
 
     Desenha(avl, 1);
+    printf("\n\n%d\n\n", Altura(avl));
 
     if (is_avl(avl))
         puts("Eh AVL");
     else
         puts("Nao eh AVL");
-
-    abp = InsereABP(abp, 8);
-    abp = InsereABP(abp, 4);
-    abp = InsereABP(abp, 9);
-    abp = InsereABP(abp, 2);
-    abp = InsereABP(abp, 6);
-    abp = InsereABP(abp, 1);
-
-    imprimiABP(abp, 1);
-    printf("\n\n%d\n\n", alturaABP(abp));
-
+ */
     /*
         if (argc != 4) // o numero de parametros esperado � 3: nome do programa (argv[0]), nome do arq de entrada(argv[1]), nome do arq de saida(argv[2])
         {
