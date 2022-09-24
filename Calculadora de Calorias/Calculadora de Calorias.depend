@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1664001158 source:e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\avl.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<string.h>
+	"avl.h"
+
+1664001563 e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\avl.h
+
+1664001027 source:e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\bintree.c
+	<stdio.h>
+	<stdlib.h>
+	"binTree.h"
+
+1664001563 e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\bintree.h
+
