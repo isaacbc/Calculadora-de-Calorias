@@ -1,11 +1,12 @@
 
-typedef int TipoInfo;
+typedef char TipoInfo;
 
 struct TNodoAVL{
-    TipoInfo info;
+    TipoInfo *info;
+    int cals;
     int FB;
     struct TNodoAVL *esq;
-    struct TNodoA *dir;
+    struct TNodoAVL *dir;
 };
 typedef struct TNodoAVL pNodoAVL;
 
@@ -20,5 +21,5 @@ pNodoAVL *rotacao_dupla_direita (pNodoAVL *pt);
 pNodoAVL *rotacao_dupla_esquerda (pNodoAVL *pt);
 pNodoAVL *Caso1 (pNodoAVL *a, int *ok);
 pNodoAVL *Caso2 (pNodoAVL *a, int *ok);
-pNodoAVL *InsereAVL (pNodoAVL *a, TipoInfo x, int *ok);
+pNodoAVL *InsereAVL(pNodoAVL *a, TipoInfo *x, TipoInfo *calStr, int *ok);
 

@@ -4,7 +4,6 @@
 #include <string.h>
 #include "avl.h"
 
-
 pNodoAVL *InsereArvore(pNodoAVL *a, TipoInfo ch)
 {
     if (a == NULL)
@@ -44,11 +43,15 @@ void Desenha(pNodoAVL *a, int nivel)
     {
         for (x = 1; x <= nivel; x++)
             printf("=");
-        printf("%d FB= %d\n", a->info, Calcula_FB(a));
+        printf("%s FB= %d\n", a->info, Calcula_FB(a));
         if (a->esq != NULL)
             Desenha(a->esq, (nivel + 1));
         if (a->dir != NULL)
             Desenha(a->dir, (nivel + 1));
+    }
+    else
+    {
+        printf("vazio");
     }
 }
 
@@ -177,59 +180,68 @@ pNodoAVL *Caso2(pNodoAVL *a, int *ok)
     return a;
 }
 
-pNodoAVL *InsereAVL(pNodoAVL *a, TipoInfo x, int *ok)
+pNodoAVL *InsereAVL(pNodoAVL *a, TipoInfo *x, TipoInfo *calStr, int *ok)
 {
     /* Insere nodo em uma árvore AVL, onde A representa a raiz da árvore,
       x, a chave a ser inserida e h a altura da árvore */
-
+    int cals = atoi(calStr);
+    int res;
     if (a == NULL)
     {
         a = (pNodoAVL *)malloc(sizeof(pNodoAVL));
-        a->info = x;
+        a->info = malloc(strlen(x) + 1);
+        strcpy(a->info, x);
+        a->cals = cals;
         a->esq = NULL;
         a->dir = NULL;
         a->FB = 0;
         *ok = 1;
     }
-    else if (x < a->info)
-    {
-        a->esq = InsereAVL(a->esq, x, ok);
-        if (*ok)
-        {
-            switch (a->FB)
-            {
-            case -1:
-                a->FB = 0;
-                *ok = 0;
-                break;
-            case 0:
-                a->FB = 1;
-                break;
-            case 1:
-                a = Caso1(a, ok);
-                break;
-            }
-        }
-    }
     else
     {
-        a->dir = InsereAVL(a->dir, x, ok);
-        if (*ok)
+        res = strcmp(x, a->info);
+        if (res < 0)
         {
-            switch (a->FB)
+            a->esq = InsereAVL(a->esq, x, calStr, ok);
+            if (*ok)
             {
-            case 1:
-                a->FB = 0;
-                *ok = 0;
-                break;
-            case 0:
-                a->FB = -1;
-                break;
-            case -1:
-                a = Caso2(a, ok);
-                break;
+                switch (a->FB)
+                {
+                case -1:
+                    a->FB = 0;
+                    *ok = 0;
+                    break;
+                case 0:
+                    a->FB = 1;
+                    break;
+                case 1:
+                    a = Caso1(a, ok);
+                    break;
+                }
             }
         }
+        else if(res > 0)
+        {
+            a->dir = InsereAVL(a->dir, x, calStr, ok);
+            if (*ok)
+            {
+                switch (a->FB)
+                {
+                case 1:
+                    a->FB = 0;
+                    *ok = 0;
+                    break;
+                case 0:
+                    a->FB = -1;
+                    break;
+                case -1:
+                    a = Caso2(a, ok);
+                    break;
+                }
+            }
+        }
+        else
+            return;
     }
     return a;
 }

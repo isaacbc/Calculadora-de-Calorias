@@ -31,12 +31,12 @@ void trimTrailing(char *str)
     str[index + 1] = '\0';
 }
 
-pNodoABP *le_sinonimosABP(char *file_name, pNodoABP *root)
+pNodoABP *leArquivoParaABP(char *file_name, pNodoABP *root)
 {
     printf("entrou");
     FILE *entrada;
     char separador[] = {";\n\t"};
-    char linha[1000], aux_palavra[30], palavra2[30], palavra3[30];
+    char linha[1000], aux_palavra[30], palavra1[30], palavra2[30];
     entrada = fopen(file_name, "r"); // abre o arquivo para leitura -- argv[1] � o primeiro par�metro ap�s o nome do arquivo.
     if (entrada == NULL)             // se n�o conseguiu abrir o arquivo
     {
@@ -50,15 +50,104 @@ pNodoABP *le_sinonimosABP(char *file_name, pNodoABP *root)
         {
             strcpy(aux_palavra, strlwr(strtok(linha, separador))); // copia o token (o nome ate a #)
             trimTrailing(aux_palavra);
+            strcpy(palavra1, aux_palavra);
+
+            strcpy(aux_palavra, strlwr(strtok(NULL, separador))); // copia o token (o nome ate a #)
+            trimTrailing(aux_palavra);
             strcpy(palavra2, aux_palavra);
 
-            printf("\n%s", palavra2);
-            root = InsereABP(root, palavra2);
+            root = InsereABP(root, palavra1, palavra2);
         }
     }
     printf("Arquivo lido com sucesso!");
     fclose(entrada); // fecha os arquivos
     return root;
+}
+
+pNodoAVL *leArquivoParaAVL(char *file_name, pNodoAVL *root)
+{
+    int i, ok;
+    printf("entrou");
+    FILE *entrada;
+    char separador[] = {";\n\t"};
+    char linha[1000], aux_palavra[30], palavra1[30], palavra2[30];
+    entrada = fopen(file_name, "r"); // abre o arquivo para leitura -- argv[1] � o primeiro par�metro ap�s o nome do arquivo.
+    if (entrada == NULL)             // se n�o conseguiu abrir o arquivo
+    {
+        printf("Erro ao abrir o arquivo %s", file_name);
+        return;
+    }
+    else // arquivo de entrada OK
+    {
+        // percorre todo o arquivo lendo linha por linha
+        while (fgets(linha, 1000, entrada))
+        {
+            strcpy(aux_palavra, strlwr(strtok(linha, separador))); // copia o token (o nome ate a #)
+            trimTrailing(aux_palavra);
+            strcpy(palavra1, aux_palavra);
+
+            strcpy(aux_palavra, strlwr(strtok(NULL, separador))); // copia o token (o nome ate a #)
+            trimTrailing(aux_palavra);
+            strcpy(palavra2, aux_palavra);
+
+            root = InsereAVL(root, palavra1, palavra2, &ok);
+        }
+    }
+    printf("Arquivo lido com sucesso!");
+    fclose(entrada); // fecha os arquivos
+    return root;
+}
+
+int escreveArquivoABP(char *file_entrada, char *file_saida, pNodoABP *root)
+{
+    FILE *entrada;
+    FILE *saida;
+    char separador[] = {";\n\t"};
+    char linha[1000], aux_palavra[30], palavra1[30], palavra2[30];
+    pNodoABP *busca = NULL;
+    int calsLidas;
+    int calsTotais;
+    entrada = fopen(file_entrada, "r");
+
+    if (entrada == NULL)
+    {
+        printf("Erro ao abrir o arquivo %s", file_entrada);
+        return 1;
+    }
+    else
+    {
+        saida = fopen(file_saida, "w");
+        if (saida == NULL)
+        {
+            printf("Erro ao abrir o arquivo %s", file_saida);
+            return 1;
+        }
+
+        // percorre todo o arquivo lendo linha por linha
+        while (fgets(linha, 1000, entrada))
+        {
+            strcpy(aux_palavra, strlwr(strtok(linha, separador))); // copia o token (o nome ate a #)
+            trimTrailing(aux_palavra);
+            strcpy(palavra1, aux_palavra);
+
+            strcpy(aux_palavra, strlwr(strtok(NULL, separador))); // copia o token (o nome ate a #)
+            trimTrailing(aux_palavra);
+            strcpy(palavra2, aux_palavra);
+            //calsLidas = atoi(palavra2);
+            printf("%s\n", palavra1);
+            fprintf(saida, "%s ", palavra1);
+
+            /* busca = consultaABP(root, strlwr(palavra1));
+            if (busca)
+            {
+                calsTotais = calsLidas * busca->cals/100;
+                printf("\n%dg de %s (%d calorias por 100g) = %d calorias", calsLidas, busca->info, busca->cals, calsTotais);
+            } */
+        }
+    }
+    fclose(entrada); // fecha os arquivos
+    fclose(saida);
+    return 0;
 }
 
 int main(int argc, char *argv[])
@@ -83,11 +172,16 @@ int main(int argc, char *argv[])
     {
         pNodoABP *abp = NULL;
         pNodoAVL *avl = NULL;
-        int i, ok;
-        printf("oie");
-        abp = le_sinonimosABP(argv[1], abp);
-        Desenha(abp, 1);
+
+        abp = leArquivoParaABP(argv[1], abp);
         printf("\n\n%d\n\n", alturaABP(abp));
+        printf("==========================");
+
+        avl = leArquivoParaAVL(argv[1], avl);
+        printf("\n\n%d\n\n", Altura(avl));
+        printf("==========================");
+        //escreveArquivoABP(argv[2], argv[3], abp);
+        
         SetConsoleOutputCP(CPAGE_DEFAULT);
         return 0;
     }
