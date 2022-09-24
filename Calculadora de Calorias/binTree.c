@@ -17,7 +17,6 @@ pNodoABP *InsereABP(pNodoABP *a, tipoinfo *ch)
     else
     {
         res = strcmp(ch, a->info);
-        printf("\n%d", res);
         if (res < 0)
             a->esq = InsereABP(a->esq, ch);
         else if (res > 0)
