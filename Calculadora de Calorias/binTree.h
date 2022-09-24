@@ -10,7 +10,7 @@ struct TNodoABP{
 
 typedef struct TNodoABP pNodoABP;
 
-pNodoABP* InsereABP(pNodoABP *a, tipoinfo *ch);
+pNodoABP *InsereABP(pNodoABP *a, tipoinfo *ch, tipoinfo *calStr);
 void preFixadoE(pNodoABP *a);
 void preFixadoD(pNodoABP *a);
 void posFixadoE(pNodoABP *a);

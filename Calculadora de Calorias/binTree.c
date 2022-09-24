@@ -2,15 +2,16 @@
 #include <stdlib.h>
 #include "binTree.h"
 
-pNodoABP *InsereABP(pNodoABP *a, tipoinfo *ch)
+pNodoABP *InsereABP(pNodoABP *a, tipoinfo *ch, tipoinfo *calStr)
 {
+    int cals =  atoi(calStr);
     int res;
     if (a == NULL)
     {
         a = (pNodoABP*)malloc(sizeof(pNodoABP));
         a->info = malloc(strlen(ch) + 1);
         strcpy (a->info, ch);
-        a->cals = 0;
+        a->cals = cals;
         a->esq = NULL;
         a->dir = NULL;
     }
@@ -18,9 +19,9 @@ pNodoABP *InsereABP(pNodoABP *a, tipoinfo *ch)
     {
         res = strcmp(ch, a->info);
         if (res < 0)
-            a->esq = InsereABP(a->esq, ch);
+            a->esq = InsereABP(a->esq, ch, calStr);
         else if (res > 0)
-            a->dir = InsereABP(a->dir, ch);
+            a->dir = InsereABP(a->dir, ch, calStr);
         else
             return;
     }
