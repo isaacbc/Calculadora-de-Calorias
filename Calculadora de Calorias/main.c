@@ -30,9 +30,18 @@ int main(int argc, char *argv[])
         pNodoA *abp = NULL;
         pNodoA *avl = NULL;
 
+        char alimentos[LISTA][MAX_PALAVRA];
+        int valores_alimentos[LISTA][3];
+        int estatisticas_avl[6];
+        int estatisticas_abp[6];
+
         abp = leArquivoParaArvore(argv[1], abp, 0);
+        consultaArquivoABP(argv[2], abp, estatisticas_abp, alimentos, valores_alimentos, 0);
+
         avl = leArquivoParaArvore(argv[1], avl, 1);
-        escreveArquivoABP(argv[2], argv[3], abp, avl);
+        consultaArquivoABP(argv[2], avl, estatisticas_avl, alimentos, valores_alimentos, 1);
+
+        escreveNoArquivo(argv[3], alimentos, valores_alimentos, estatisticas_abp, estatisticas_avl);
 
         SetConsoleOutputCP(CPAGE_DEFAULT);
         return 0;

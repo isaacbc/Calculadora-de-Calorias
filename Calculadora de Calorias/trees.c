@@ -5,7 +5,6 @@
 ///////////// COMUM //////////////
 
 int rotacoes = 0;
-int rotacoesABP = 0;
 int comp = 0;
 
 int Altura(pNodoA *a)
@@ -310,8 +309,6 @@ pNodoA *Caso2(pNodoA *a, int *ok)
 
 pNodoA *InsereAVL(pNodoA *a, TipoInfo *x, TipoInfo *calStr, int *ok)
 {
-    /* Insere nodo em uma árvore AVL, onde A representa a raiz da árvore,
-      x, a chave a ser inserida e h a altura da árvore */
     int cals = atoi(calStr);
     int res;
     if (a == NULL)
@@ -436,18 +433,16 @@ pNodoA *leArquivoParaArvore(char *file_name, pNodoA *root, int type)
     return root;
 }
 
-int escreveArquivoABP(char *file_entrada, char *file_saida, pNodoA *abp, pNodoA *avl)
+int consultaArquivoABP(char *file_entrada, pNodoA *abp, int estatisticas[6], char alimentos[LISTA][MAX_PALAVRA], int valores_alimentos[LISTA][3], int isAvl)
 {
-    int calsLidas, calsTotais, calsDia=0;
+    int calsLidas, calsTotais, calsDia = 0;
     FILE *entrada;
-    FILE *entrada2;
-    FILE *saida;
     char separador[] = {";\n\t"};
     char linha[1000], aux_palavra[30], palavra1[30], palavra2[30];
     pNodoA *busca = NULL;
+    int count = 0;
 
     entrada = fopen(file_entrada, "r");
-    entrada2 = fopen(file_entrada, "r");
     if (entrada == NULL)
     {
         printf("Erro ao abrir o arquivo %s", file_entrada);
@@ -455,13 +450,6 @@ int escreveArquivoABP(char *file_entrada, char *file_saida, pNodoA *abp, pNodoA 
     }
     else
     {
-        saida = fopen(file_saida, "w");
-        if (saida == NULL)
-        {
-            printf("Erro ao abrir o arquivo %s", file_saida);
-            return 1;
-        }
-
         // percorre todo o arquivo lendo linha por linha
         while (fgets(linha, 1000, entrada))
         {
@@ -476,48 +464,55 @@ int escreveArquivoABP(char *file_entrada, char *file_saida, pNodoA *abp, pNodoA 
             calsLidas = atoi(palavra2);
             busca = consulta(abp, strlwr(palavra1));
 
-            if (busca)
+            if (busca && !isAvl) //cria a legenda dos alimentos apenas uma vez na abp
             {
                 calsTotais = calsLidas * busca->cals / 100;
                 calsDia += calsTotais;
-                fprintf(saida, "\n%dg de %s (%d calorias por 100g) = %d calorias", calsLidas, busca->info, busca->cals, calsTotais);
+                valores_alimentos[count][0] = calsLidas;
+                valores_alimentos[count][1] = busca->cals;
+                valores_alimentos[count][2] = calsTotais;
+                strcpy(alimentos[count], busca->info);
             }
+            count++;
         }
-
-
-        fprintf(saida, "\nTotal de %d calorias consumidas no dia.\n\n", calsDia);
-        fprintf(saida, "\n==========================\n");
-        fprintf(saida, "\nNumero de Nodos: %d", calculaNodos(abp));
-        fprintf(saida, "\naltura: %d", Altura(abp));
-        fprintf(saida, "\nRotaçoes: %d", rotacoesABP);
-        fprintf(saida, "\ncomparacoes: %d", comp);
-        fprintf(saida, "\n==========================\n");
-
+        estatisticas[0] = calsDia;
+        estatisticas[1] = calculaNodos(abp);
+        estatisticas[2] = Altura(abp);
+        estatisticas[3] = rotacoes;
+        estatisticas[4] = comp;
+        estatisticas[5] = count;
 
         comp = 0;
-        while (fgets(linha, 1000, entrada2))
-        {
-            strcpy(aux_palavra, strlwr(strtok(linha, separador))); // copia o token (o nome ate a #)
-            trimTrailing(aux_palavra);
-            strcpy(palavra1, aux_palavra);
 
-            strcpy(aux_palavra, strlwr(strtok(NULL, separador))); // copia o token (o nome ate a #)
-            trimTrailing(aux_palavra);
-            strcpy(palavra2, aux_palavra);
-
-            busca = consulta(avl, strlwr(palavra1));
-            if(busca){
-                printf("\n%s\n", busca->info);
-            }
-        }
-        fprintf(saida, "\n==========================\n");
-        fprintf(saida, "\nNumero de Nodos: %d", calculaNodos(avl));
-        fprintf(saida, "\naltura: %d", Altura(avl));
-        fprintf(saida, "\nRotaçoes: %d", rotacoes);
-        fprintf(saida, "\ncomparacoes: %d", comp);
-        fprintf(saida, "\n==========================\n");
+        fclose(entrada); // fecha os arquivos
+        return 0;
     }
-    fclose(entrada); // fecha os arquivos
-    fclose(saida);
-    return 0;
-}
+};
+
+void escreveNoArquivo(char *file_saida, char alimentos[LISTA][MAX_PALAVRA], int valores_alimentos[LISTA][3], int estatisticas_abp[6], int estatisticas_avl[6])
+{
+    FILE *saida;
+    saida = fopen(file_saida, "w");
+    int nodos_consultados =  estatisticas_abp[5];
+    for (int i = 0; i < nodos_consultados; i++)
+    {
+        fprintf(saida, "\n%dg de %s (%d calorias por 100g) = %d calorias", valores_alimentos[i][0], alimentos[i], valores_alimentos[i][1], valores_alimentos[i][2]);
+    }
+
+    fprintf(saida, "\n\nTotal de %d calorias consumidas no dia.\n\n", estatisticas_abp[0]);
+    fprintf(saida, "\n============ABP============\n");
+    fprintf(saida, "\nNumero de Nodos: %d", estatisticas_abp[1]);
+    fprintf(saida, "\naltura: %d", estatisticas_abp[2]);
+    fprintf(saida, "\nRotaçoes: %d", estatisticas_abp[3]);
+    fprintf(saida, "\ncomparacoes: %d", estatisticas_abp[4]);
+    fprintf(saida, "\n==========================\n");
+
+    fprintf(saida, "\n============AVL==============\n");
+    fprintf(saida, "\nNumero de Nodos: %d", estatisticas_avl[1]);
+    fprintf(saida, "\naltura: %d", estatisticas_avl[2]);
+    fprintf(saida, "\nRotaçoes: %d", estatisticas_avl[3]);
+    fprintf(saida, "\ncomparacoes: %d", estatisticas_avl[4]);
+    fprintf(saida, "\n==========================\n");
+
+    fclose(saida); // fecha os arquivos
+};

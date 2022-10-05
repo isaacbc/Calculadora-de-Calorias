@@ -1,3 +1,6 @@
+#define MAX_PALAVRA 15
+#define LISTA 50
+
 typedef char TipoInfo;
 struct TNodoA
 {
@@ -10,7 +13,7 @@ struct TNodoA
 typedef struct TNodoA pNodoA;
 
 ///////////// COMUM //////////
-int Altura (pNodoA *a);
+int Altura(pNodoA *a);
 void Desenha(pNodoA *a, int nivel);
 int calculaNodos(pNodoA *a);
 int Calcula_FB(pNodoA *a);
@@ -30,12 +33,13 @@ pNodoA *InsereAVL(pNodoA *a, TipoInfo *x, TipoInfo *calStr, int *ok);
 int is_avl(pNodoA *a);
 pNodoA *rotacao_direita(pNodoA *pt);
 pNodoA *rotacao_esquerda(pNodoA *pt);
-pNodoA *rotacao_dupla_direita (pNodoA *pt);
-pNodoA *rotacao_dupla_esquerda (pNodoA *pt);
-pNodoA *Caso1 (pNodoA *a, int *ok);
-pNodoA *Caso2 (pNodoA *a, int *ok);
+pNodoA *rotacao_dupla_direita(pNodoA *pt);
+pNodoA *rotacao_dupla_esquerda(pNodoA *pt);
+pNodoA *Caso1(pNodoA *a, int *ok);
+pNodoA *Caso2(pNodoA *a, int *ok);
 
 ////////////////// FUNCOES DE ARQUIVO ///////////////////
 void trimTrailing(char *str);
 pNodoA *leArquivoParaArvore(char *file_name, pNodoA *root, int type);
-int escreveArquivoABP(char *file_entrada, char *file_saida, pNodoA *abp, pNodoA *avl);
+int consultaArquivoABP(char *file_entrada, pNodoA *abp, int estatisticas[6], char alimentos[LISTA][MAX_PALAVRA], int valores_alimentos[LISTA][3], int isAvl);
+void escreveNoArquivo(char *file_saida, char alimentos[LISTA][MAX_PALAVRA], int valores_alimentos[LISTA][3], int estatisticas_abp[6], int estatisticas_avl[6]);
