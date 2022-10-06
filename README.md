@@ -1,5 +1,5 @@
 # Calculadora-de-Calorias
-Trabalho final da disciplina de Estrutura de Dados que tem por objetivo a utilização e comparação de 2 tipos de árvores: Binary Tree e AVL  
+Trabalho final da disciplina de Estrutura de Dados que tem por objetivo a utilização e comparação de 2 tipos de árvores: ABP e AVL  
 Para testar:  
 Os arquivos de teste estao na pasta bin > Debug, junto com o executavel, basta acessar essa pasta pelo terminal e chamar os seguintes arquivos:  
 '.\Calculadora de Calorias.exe' .\1000Sorted.csv .\day1.csv .\saida_day1_sorted.txt  
