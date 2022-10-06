@@ -1,0 +1,40 @@
+
+200g de pineapple juice (53 calorias por 100g) = 106 calorias
+50g de baguette (274 calorias por 100g) = 137 calorias
+20g de raspberries (52 calorias por 100g) = 10 calorias
+300g de hot chocolate (89 calorias por 100g) = 267 calorias
+30g de walnut cream cheese (342 calorias por 100g) = 102 calorias
+150g de omelette (154 calorias por 100g) = 231 calorias
+20g de canadian-style bacon (107 calorias por 100g) = 21 calorias
+370g de burger king double whopper with cheese (249 calorias por 100g) = 921 calorias
+500g de coca cola (42 calorias por 100g) = 210 calorias
+150g de ice cream sundae (142 calorias por 100g) = 213 calorias
+200g de coffee (1 calorias por 100g) = 2 calorias
+150g de peanut butter cookies (475 calorias por 100g) = 712 calorias
+190g de sparkling wine (190 calorias por 100g) = 361 calorias
+10g de balsamic vinaigrette dressing (290 calorias por 100g) = 29 calorias
+200g de lobster bisque soup (100 calorias por 100g) = 200 calorias
+20g de lettuce (15 calorias por 100g) = 3 calorias
+200g de pork ribs (292 calorias por 100g) = 584 calorias
+50g de white potatoes (94 calorias por 100g) = 47 calorias
+50g de bailey�s irish cream (327 calorias por 100g) = 163 calorias
+100g de chocolate mousse pie (260 calorias por 100g) = 260 calorias
+
+Total de 4579 calorias consumidas no dia.
+
+
+============ABP============
+
+Numero de Nodos: 1993
+altura: 1814
+Rotaçoes: 0
+comparacoes: 16742
+==========================
+
+============AVL==============
+
+Numero de Nodos: 1993
+altura: 12
+Rotacoes: 1869
+comparacoes: 200
+==========================
