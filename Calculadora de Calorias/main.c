@@ -7,6 +7,14 @@
 #include <windows.h>
 #include "trees.h"
 
+/* Opcoes de Teste - os arquivos de teste estao na pasta bin > Debug, junto com o executavel
+ '.\Calculadora de Calorias.exe' .\1000Sorted.csv .\day1.csv .\saida_day1_sorted.txt
+ '.\Calculadora de Calorias.exe' .\1000Shuffled.csv .\day1.csv .\saida_day1_shuffled.txt
+ '.\Calculadora de Calorias.exe' .\AllShuffled.csv .\day2.csv .\saida_day2_shuffled.txt
+ '.\Calculadora de Calorias.exe' .\AllSorted.csv .\day2.csv .\saida_day2_sorted.txt
+ */
+
+
 int main(int argc, char *argv[])
 {
     // Define o valor das páginas de código UTF8 e default do Windows
@@ -36,7 +44,7 @@ int main(int argc, char *argv[])
         int estatisticas_abp[6];
 
         abp = leArquivoParaArvore(argv[1], abp, 0);
-        consultaArquivoABP(argv[2], abp, estatisticas_abp, alimentos, valores_alimentos, 0);
+        consultaArquivoABP(argv[2], abp, estatisticas_abp, alimentos, valores_alimentos, 0); //pesquisa na abp e preenche os arrays de informacoes
 
         avl = leArquivoParaArvore(argv[1], avl, 1);
         consultaArquivoABP(argv[2], avl, estatisticas_avl, alimentos, valores_alimentos, 1);

@@ -1,4 +1,4 @@
-#define MAX_PALAVRA 15
+#define MAX_PALAVRA 50
 #define LISTA 50
 
 typedef char TipoInfo;

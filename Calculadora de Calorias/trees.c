@@ -395,8 +395,7 @@ pNodoA *leArquivoParaArvore(char *file_name, pNodoA *root, int type)
 {
     int i, ok = 0;
     rotacoes = 0;
-    char separador[] = {";\n\t"};
-    char linha[1000], aux_palavra[30], palavra1[30], palavra2[30];
+    char linha[1000], aux_palavra[50], palavra1[50], palavra2[50];
     FILE *entrada;
 
     pNodoA *(*InsereArvore)(pNodoA *, TipoInfo *, TipoInfo *, int *); // cria um tipo função genérico para receber uma das duas
@@ -417,11 +416,11 @@ pNodoA *leArquivoParaArvore(char *file_name, pNodoA *root, int type)
         // percorre todo o arquivo lendo linha por linha
         while (fgets(linha, 1000, entrada))
         {
-            strcpy(aux_palavra, strlwr(strtok(linha, separador))); // copia o token (o nome ate a ;)
+            strcpy(aux_palavra, strlwr(strtok(linha, ";"))); // copia o token (o nome ate a ;)
             trimTrailing(aux_palavra);
             strcpy(palavra1, aux_palavra);
 
-            strcpy(aux_palavra, strlwr(strtok(NULL, separador))); // copia o token (o nome ate o fim)
+            strcpy(aux_palavra, strlwr(strtok(NULL, "\n"))); // copia o token (o nome ate o fim)
             trimTrailing(aux_palavra);
             strcpy(palavra2, aux_palavra);
 
@@ -437,8 +436,7 @@ int consultaArquivoABP(char *file_entrada, pNodoA *abp, int estatisticas[6], cha
 {
     int calsLidas, calsTotais, calsDia = 0;
     FILE *entrada;
-    char separador[] = {";\n\t"};
-    char linha[1000], aux_palavra[30], palavra1[30], palavra2[30];
+    char linha[1000], aux_palavra[50], palavra1[50], palavra2[50];
     pNodoA *busca = NULL;
     int count = 0;
 
@@ -453,18 +451,18 @@ int consultaArquivoABP(char *file_entrada, pNodoA *abp, int estatisticas[6], cha
         // percorre todo o arquivo lendo linha por linha
         while (fgets(linha, 1000, entrada))
         {
-            strcpy(aux_palavra, strlwr(strtok(linha, separador))); // copia o token (o nome ate a #)
+            strcpy(aux_palavra, strlwr(strtok(linha, ";"))); // copia o token (o nome ate a #)
             trimTrailing(aux_palavra);
             strcpy(palavra1, aux_palavra);
 
-            strcpy(aux_palavra, strlwr(strtok(NULL, separador))); // copia o token (o nome ate a #)
+            strcpy(aux_palavra, strlwr(strtok(NULL, "\n"))); // copia o token (o nome ate a #)
             trimTrailing(aux_palavra);
             strcpy(palavra2, aux_palavra);
 
             calsLidas = atoi(palavra2);
             busca = consulta(abp, strlwr(palavra1));
 
-            if (busca && !isAvl) //cria a legenda dos alimentos apenas uma vez na abp
+            if (busca && !isAvl) // cria a legenda dos alimentos apenas uma vez na abp
             {
                 calsTotais = calsLidas * busca->cals / 100;
                 calsDia += calsTotais;
@@ -472,6 +470,14 @@ int consultaArquivoABP(char *file_entrada, pNodoA *abp, int estatisticas[6], cha
                 valores_alimentos[count][1] = busca->cals;
                 valores_alimentos[count][2] = calsTotais;
                 strcpy(alimentos[count], busca->info);
+            }
+            else if (!busca) // caso nao encontre o alimento na arvore completa a posicao no array com 0
+            {
+                valores_alimentos[count][0] = 0;
+                valores_alimentos[count][1] = 0;
+                valores_alimentos[count][2] = 0;
+                strcpy(alimentos[count], "nao encontrado");
+                printf("\n%s nao encontrado\n", strlwr(palavra1));
             }
             count++;
         }
@@ -493,10 +499,13 @@ void escreveNoArquivo(char *file_saida, char alimentos[LISTA][MAX_PALAVRA], int 
 {
     FILE *saida;
     saida = fopen(file_saida, "w");
-    int nodos_consultados =  estatisticas_abp[5];
-    for (int i = 0; i < nodos_consultados; i++)
+    int nodos_consultados = estatisticas_abp[5];
+
+    //percorre os arrays de dados dos alimentos atraves do tamanho da arvore que foi armazenado na ultima posicao do array
+    for (int i = 0; i < nodos_consultados; i++) 
     {
         fprintf(saida, "\n%dg de %s (%d calorias por 100g) = %d calorias", valores_alimentos[i][0], alimentos[i], valores_alimentos[i][1], valores_alimentos[i][2]);
+        // printf("\n%dg de %s (%d calorias por 100g) = %d calorias", valores_alimentos[i][0], alimentos[i], valores_alimentos[i][1], valores_alimentos[i][2]);
     }
 
     fprintf(saida, "\n\nTotal de %d calorias consumidas no dia.\n\n", estatisticas_abp[0]);
@@ -510,7 +519,7 @@ void escreveNoArquivo(char *file_saida, char alimentos[LISTA][MAX_PALAVRA], int 
     fprintf(saida, "\n============AVL==============\n");
     fprintf(saida, "\nNumero de Nodos: %d", estatisticas_avl[1]);
     fprintf(saida, "\naltura: %d", estatisticas_avl[2]);
-    fprintf(saida, "\nRotaçoes: %d", estatisticas_avl[3]);
+    fprintf(saida, "\nRotacoes: %d", estatisticas_avl[3]);
     fprintf(saida, "\ncomparacoes: %d", estatisticas_avl[4]);
     fprintf(saida, "\n==========================\n");
 
