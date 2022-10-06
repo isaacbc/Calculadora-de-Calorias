@@ -1,17 +1,34 @@
 # depslib dependency file v1.0
-1664001158 source:e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\avl.c
+1664060590 source:e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\avl.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
 	<string.h>
 	"avl.h"
 
-1664001563 e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\avl.h
+1664060599 e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\avl.h
 
-1664001027 source:e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\bintree.c
+1664051533 source:e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\bintree.c
 	<stdio.h>
 	<stdlib.h>
 	"binTree.h"
 
-1664001563 e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\bintree.h
+1664049011 e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\bintree.h
+
+1665022572 source:e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\main.c
+	<stdio.h>
+	<conio.h>
+	<stdlib.h>
+	<string.h>
+	<locale.h>
+	<time.h>
+	<windows.h>
+	"trees.h"
+
+1664988137 e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\trees.h
+
+1664990953 source:e:\users\isado\onedrive - networkme\documents\cic\estruturas de dados\calculadora de calorias\calculadora-de-calorias\calculadora de calorias\trees.c
+	<stdio.h>
+	<stdlib.h>
+	"trees.h"
 
