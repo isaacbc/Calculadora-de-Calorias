@@ -3,25 +3,9 @@
 #include <conio.h>
 #include <string.h>
 #include "avl.h"
+#include "trees.h"
 
-pNodoAVL *InsereArvore(pNodoAVL *a, TipoInfo ch)
-{
-    if (a == NULL)
-    {
-        a = (pNodoAVL *)malloc(sizeof(pNodoAVL));
-        a->info = ch;
-        a->esq = NULL;
-        a->dir = NULL;
-        a->FB = 0; // o nodo é sempre inserido como folha então seu fator de balanceamento é 0
-    }
-    else if (ch < (a->info))
-        a->esq = InsereArvore(a->esq, ch);
-    else
-        a->dir = InsereArvore(a->dir, ch);
-    return a;
-}
-
-int Altura(pNodoAVL *a)
+int Altura(pNodoA *a)
 {
     if (a == NULL)
         return 0;
@@ -30,12 +14,12 @@ int Altura(pNodoAVL *a)
     return 1 + (esq > dir ? esq : dir);
 }
 
-int Calcula_FB(pNodoAVL *a)
+int Calcula_FB(pNodoA *a)
 {
     return (Altura(a->esq) - Altura(a->dir));
 }
 
-void Desenha(pNodoAVL *a, int nivel)
+void Desenha(pNodoA *a, int nivel)
 {
     int x;
 
@@ -55,7 +39,7 @@ void Desenha(pNodoAVL *a, int nivel)
     }
 }
 
-int is_avl(pNodoAVL *a)
+int is_avl(pNodoA *a)
 {
     int alt_esq, alt_dir;
 
@@ -69,9 +53,9 @@ int is_avl(pNodoAVL *a)
         return 1;
 }
 
-pNodoAVL *rotacao_direita(pNodoAVL *pt)
+pNodoA *rotacao_direita(pNodoA *pt)
 {
-    pNodoAVL *ptu;
+    pNodoA *ptu;
 
     ptu = pt->esq;
     pt->esq = ptu->dir;
@@ -81,9 +65,9 @@ pNodoAVL *rotacao_direita(pNodoAVL *pt)
     return pt;
 }
 
-pNodoAVL *rotacao_esquerda(pNodoAVL *pt)
+pNodoA *rotacao_esquerda(pNodoA *pt)
 {
-    pNodoAVL *ptu;
+    pNodoA *ptu;
 
     ptu = pt->dir;
     pt->dir = ptu->esq;
@@ -93,9 +77,9 @@ pNodoAVL *rotacao_esquerda(pNodoAVL *pt)
     return pt;
 }
 
-pNodoAVL *rotacao_dupla_direita(pNodoAVL *pt)
+pNodoA *rotacao_dupla_direita(pNodoA *pt)
 {
-    pNodoAVL *ptu, *ptv;
+    pNodoA *ptu, *ptv;
 
     ptu = pt->esq;
     ptv = ptu->dir;
@@ -115,9 +99,9 @@ pNodoAVL *rotacao_dupla_direita(pNodoAVL *pt)
     return pt;
 }
 
-pNodoAVL *rotacao_dupla_esquerda(pNodoAVL *pt)
+pNodoA *rotacao_dupla_esquerda(pNodoA *pt)
 {
-    pNodoAVL *ptu, *ptv;
+    pNodoA *ptu, *ptv;
 
     ptu = pt->dir;
     ptv = ptu->esq;
@@ -137,9 +121,9 @@ pNodoAVL *rotacao_dupla_esquerda(pNodoAVL *pt)
     return pt;
 }
 
-pNodoAVL *Caso1(pNodoAVL *a, int *ok)
+pNodoA *Caso1(pNodoA *a, int *ok)
 {
-    pNodoAVL *ptu;
+    pNodoA *ptu;
 
     ptu = a->esq;
     if (ptu->FB == 1)
@@ -158,9 +142,9 @@ pNodoAVL *Caso1(pNodoAVL *a, int *ok)
     return a;
 }
 
-pNodoAVL *Caso2(pNodoAVL *a, int *ok)
+pNodoA *Caso2(pNodoA *a, int *ok)
 {
-    pNodoAVL *ptu;
+    pNodoA *ptu;
 
     ptu = a->dir;
     if (ptu->FB == -1)
@@ -180,7 +164,7 @@ pNodoAVL *Caso2(pNodoAVL *a, int *ok)
     return a;
 }
 
-pNodoAVL *InsereAVL(pNodoAVL *a, TipoInfo *x, TipoInfo *calStr, int *ok)
+pNodoA *InsereAVL(pNodoA *a, TipoInfo *x, TipoInfo *calStr, int *ok)
 {
     /* Insere nodo em uma árvore AVL, onde A representa a raiz da árvore,
       x, a chave a ser inserida e h a altura da árvore */
@@ -188,7 +172,7 @@ pNodoAVL *InsereAVL(pNodoAVL *a, TipoInfo *x, TipoInfo *calStr, int *ok)
     int res;
     if (a == NULL)
     {
-        a = (pNodoAVL *)malloc(sizeof(pNodoAVL));
+        a = (pNodoA *)malloc(sizeof(pNodoA));
         a->info = malloc(strlen(x) + 1);
         strcpy(a->info, x);
         a->cals = cals;

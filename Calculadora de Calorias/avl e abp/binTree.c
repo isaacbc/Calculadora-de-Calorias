@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "binTree.h"
+#include "trees.h"
 
-pNodoABP *InsereABP(pNodoABP *a, tipoinfo *ch, tipoinfo *calStr)
+pNodoA *InsereABP(pNodoA *a, TipoInfo *ch, TipoInfo *calStr)
 {
     int cals =  atoi(calStr);
     int res;
     if (a == NULL)
     {
-        a = (pNodoABP*)malloc(sizeof(pNodoABP));
+        a = (pNodoA*)malloc(sizeof(pNodoA));
         a->info = malloc(strlen(ch) + 1);
         strcpy (a->info, ch);
         a->cals = cals;
@@ -29,7 +30,7 @@ pNodoABP *InsereABP(pNodoABP *a, tipoinfo *ch, tipoinfo *calStr)
 
 }
 
-int alturaABP(pNodoABP *a)
+int alturaABP(pNodoA *a)
 {
     if (a == NULL)
         return 0;
@@ -38,19 +39,19 @@ int alturaABP(pNodoABP *a)
     return 1 + (esq > dir ? esq : dir);
 }
 
-int calculaNodosABP(pNodoABP *a)
+int calculaNodosABP(pNodoA *a)
 {
     if (a == NULL)
         return 0;
     return 1 + calculaNodosABP(a->dir) + calculaNodosABP(a->esq);
 }
 
-int fbNodoABP(pNodoABP *a)
+int fbNodoABP(pNodoA *a)
 {
     return (alturaABP(a->esq) - alturaABP(a->dir));
 }
 
-void fbABP(pNodoABP *a, int *fb)
+void fbABP(pNodoA *a, int *fb)
 {
     int nodo;
     if (a != NULL)
@@ -65,7 +66,7 @@ void fbABP(pNodoABP *a, int *fb)
     }
 }
 
-void preFixadoE(pNodoABP *a)
+void preFixadoE(pNodoA *a)
 {
     if (a != NULL)
     {
@@ -75,7 +76,7 @@ void preFixadoE(pNodoABP *a)
     }
 }
 
-void preFixadoD(pNodoABP *a)
+void preFixadoD(pNodoA *a)
 {
     if (a != NULL)
     {
@@ -85,7 +86,7 @@ void preFixadoD(pNodoABP *a)
     }
 }
 
-void posFixadoE(pNodoABP *a)
+void posFixadoE(pNodoA *a)
 {
     if (a != NULL)
     {
@@ -95,7 +96,7 @@ void posFixadoE(pNodoABP *a)
     }
 }
 
-void posFixadoD(pNodoABP *a)
+void posFixadoD(pNodoA *a)
 {
     if (a != NULL)
     {
@@ -105,7 +106,7 @@ void posFixadoD(pNodoABP *a)
     }
 }
 
-void CentralE(pNodoABP *a)
+void CentralE(pNodoA *a)
 {
     if (a != NULL)
     {
@@ -115,7 +116,7 @@ void CentralE(pNodoABP *a)
     }
 }
 
-void CentralD(pNodoABP *a)
+void CentralD(pNodoA *a)
 {
     if (a != NULL)
     {
@@ -125,7 +126,7 @@ void CentralD(pNodoABP *a)
     }
 }
 
-pNodoABP *consultaABP(pNodoABP *a, tipoinfo *chave)
+pNodoA *consultaABP(pNodoA *a, TipoInfo *chave)
 {
     int res;
     while (a != NULL)
@@ -143,7 +144,7 @@ pNodoABP *consultaABP(pNodoABP *a, tipoinfo *chave)
     return NULL; // se nao achou
 }
 
-pNodoABP *consultaABP2(pNodoABP *a, tipoinfo *chave)
+pNodoA *consultaABP2(pNodoA *a, TipoInfo *chave)
 {
     int res;
     if (a != NULL)
